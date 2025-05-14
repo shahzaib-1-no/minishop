@@ -1,0 +1,51 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm rounded-4">
+        <div class="card-header bg-primary text-white text-center">
+          <h3 class="mb-0">Login</h3>
+        </div>
+        <div class="card-body">
+          <form method="post" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter email"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="password1" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password1"
+                name="password1"
+                placeholder="Password"
+                required
+              />
+            </div>
+
+            <div class="d-grid text-center">
+              <button type="submit" class="btn btn-primary btn-lg">Login</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
