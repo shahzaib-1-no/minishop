@@ -1,0 +1,25 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block sidebar_content_management %}
+<!-- Content Management -->
+    <div class="nav-item-header">
+        Content Management
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#contentSubmenu" role="button" aria-expanded="false" aria-controls="contentSubmenu">
+            <i class="fas fa-file-alt"></i>
+            <span class="nav-link-text">Content</span>
+            <i class="fas fa-chevron-down caret m-2"></i>
+            </a>
+            <div class="collapse" id="contentSubmenu">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ms-3">
+                <li><a href="#" class="nav-link">Overview</a></li>
+                <li><a href="#" class="nav-link">Reports</a></li>
+                <li><a href="#" class="nav-link">Analytics</a></li>
+            </ul>
+            </div>
+        </li>
+    </ul>
+
+{% endblock %}

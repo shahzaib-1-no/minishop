@@ -92,12 +92,19 @@
             ><span class="icon-shopping_cart"></span>[0]</a
           >
         </li>
-        <li class="nav-item {% if request.path == login_url %}active{% endif %}">
-          <a href="{% url 'login' %}" class="nav-link">login</a>
-        </li>
-        <li class="nav-item {% if request.path == register_url %}active{% endif %}">
-          <a href="{% url 'register' %}" class="nav-link">register</a>
-        </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item ">
+            <a href="{% url 'vendor_dashboard' %}" class="nav-link">Dashboard</a>
+          </li>
+          
+        {% else %}
+          <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+            <a href="{% url 'login' %}" class="nav-link">login</a>
+          </li>
+          <li class="nav-item {% if request.path == register_url %}active{% endif %}">
+            <a href="{% url 'register' %}" class="nav-link">register</a>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>

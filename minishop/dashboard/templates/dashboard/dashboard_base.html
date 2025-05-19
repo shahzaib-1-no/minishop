@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}Dashboard{% endblock %} | MiniShop</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'home/css/dashboard.css' %}">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Button (Mobile) -->
+            <button class="navbar-toggler border-0 me-2" type="button" id="mobile-sidebar-toggle" aria-label="Toggle sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <!-- Sidebar Toggle Button (Desktop) -->
+            <div class="d-none d-lg-block me-3">
+                <span class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+                    <i class="fas fa-bars"></i>
+                </span>
+            </div>
+            <!-- Logo -->
+            <a class="navbar-brand me-auto" href="#">
+                <i class="fas fa-cube logo-icon"></i>
+                <span class="logo-text">Dashboard</span>
+            </a>
+            
+            <!-- Right navbar items -->
+            <div class="d-flex align-items-center">
+                <!-- Theme Toggle -->
+                <button class="theme-toggle me-2" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- User Avatar -->
+
+                <div class="dropdown avatar-container position-relative">
+                    <img src="/api/placeholder/40/40" class="profile-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="avatar-badge"></span>
+                    <ul class="dropdown-menu dropdown-menu-end mt-2" id="profile_menu_dropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li> 
+                            <a class="dropdown-item" href="{% url 'logout' %}">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Navigation sidebar">
+        <div class="py-3">
+            <!-- Dashboard -->
+            <div class="nav-item-header">
+                Main
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'vendor_dashboard' %}">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                        <div class="sidebar-tooltip">Dashboard</div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                        <div class="sidebar-tooltip">Home</div>
+                    </a>
+                </li>
+            </ul>
+            {% block sidebar_content_management %}{% endblock %}
+            
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content-wrapper" id="content">
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-4">Dashboard Overview</h2>
+                </div>
+            </div>
+            
+            <!-- Dashboard Cards -->
+            <div class="row g-4">
+                <!-- Users Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="card-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="fs-2 mb-0">1,254</h3>
+                        </div>
+                        <h5 class="mb-1">Total Users</h5>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-arrow-up me-1 text-success"></i>
+                            <span>12% increase</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Revenue Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="card-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <h3 class="fs-2 mb-0">$24,500</h3>
+                        </div>
+                        <h5 class="mb-1">Revenue</h5>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-arrow-up me-1 text-success"></i>
+                            <span>8.3% increase</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Orders Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="card-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h3 class="fs-2 mb-0">352</h3>
+                        </div>
+                        <h5 class="mb-1">Orders</h5>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-arrow-down me-1 text-danger"></i>
+                            <span>3.2% decrease</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Visitors Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="card-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h3 class="fs-2 mb-0">8,945</h3>
+                        </div>
+                        <h5 class="mb-1">Visitors</h5>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-arrow-up me-1 text-success"></i>
+                            <span>15.7% increase</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{% static 'home/js/dashboard.js' %}"></script>
+</body>
+</html>
