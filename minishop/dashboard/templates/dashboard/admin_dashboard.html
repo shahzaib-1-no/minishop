@@ -1,6 +1,24 @@
 {% extends "dashboard/dashboard_base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block sidebar_content_management %}
+<!-- Product Management -->
+    <div class="nav-item-header">
+        Product Management
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "category_create" %}" role="button" >
+                <i class="fas fa-file-alt"></i>
+                <span class="nav-link-text">Category</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "product_list" %}" role="button" >
+                <i class="fas fa-file-alt"></i>
+                <span class="nav-link-text">Product</span>
+            </a>
+        </li>
+    </ul>
 <!-- Content Management -->
     <div class="nav-item-header">
         Content Management
@@ -14,12 +32,86 @@
             </a>
             <div class="collapse" id="contentSubmenu">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ms-3">
-                <li><a href="#" class="nav-link">Overview</a></li>
-                <li><a href="#" class="nav-link">Reports</a></li>
-                <li><a href="#" class="nav-link">Analytics</a></li>
+                <li><a href="{% url "navbar_create" %}" class="nav-link">Navbar</a></li>
+                <li><a href="{% url "banner_list" %}" class="nav-link">Banner</a></li>
+                <li><a href="{% url "services_list" %}" class="nav-link">Services</a></li>
             </ul>
             </div>
         </li>
     </ul>
+
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard Cards -->
+            <div class="row g-4">
+                <!-- Users Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card p-4 font_color">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="card-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="fs-2 mb-0">1,254</h3>
+                        </div>
+                        <h5 class="mb-1">Total Users</h5>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-arrow-up me-1 text-success"></i>
+                            <span>12% increase</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Revenue Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="card-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <h3 class="fs-2 mb-0">$24,500</h3>
+                        </div>
+                        <h5 class="mb-1">Revenue</h5>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-arrow-up me-1 text-success"></i>
+                            <span>8.3% increase</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Orders Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="card-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h3 class="fs-2 mb-0">352</h3>
+                        </div>
+                        <h5 class="mb-1">Orders</h5>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-arrow-down me-1 text-danger"></i>
+                            <span>3.2% decrease</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Visitors Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="card-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h3 class="fs-2 mb-0">8,945</h3>
+                        </div>
+                        <h5 class="mb-1">Visitors</h5>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-arrow-up me-1 text-success"></i>
+                            <span>15.7% increase</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
 {% endblock %}
