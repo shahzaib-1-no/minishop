@@ -394,3 +394,7 @@ body {
     transform: rotate(360deg);
   }
 }
+/* font color */
+.font_color {
+  color: #fff;
+}

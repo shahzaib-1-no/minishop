@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="{% static 'home/css/flaticon.css' %}" />
     <link rel="stylesheet" href="{% static 'home/css/icomoon.css' %}" />
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   </head>
   <body class="goto-here">
     {% include "home/header.html" %}
@@ -53,5 +55,36 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="{% static 'home/js/google-map.js' %}"></script>
     <script src="{% static 'home/js/main.js' %}"></script>
+      {% comment %} Toastr {% endcomment %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+        $(document).ready(function(){
+            // Toastr
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "timeOut": "4000",
+                "extendedTimeOut": "1000",
+                "showDuration": "300",
+                "hideDuration": "300",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+
+        });
+
+    </script>
+    <script>
+        jQuery(document).ready(function($) {
+            {% if messages %}
+                {% for message in messages %}
+                    toastr["{{ message.tags|default:"info" }}"]("{{ message|escapejs }}");
+                {% endfor %}
+            {% endif %}
+        });
+    </script>
   </body>
 </html>

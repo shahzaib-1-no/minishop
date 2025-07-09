@@ -10,6 +10,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'home/css/dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <!-- Preloader -->
@@ -97,89 +99,51 @@
     <!-- Main Content -->
     <main class="content-wrapper" id="content">
         <div class="container-fluid p-0">
-            <div class="row">
+            {% comment %} <div class="row">
                 <div class="col-12">
                     <h2 class="mb-4">Dashboard Overview</h2>
                 </div>
-            </div>
-            
-            <!-- Dashboard Cards -->
-            <div class="row g-4">
-                <!-- Users Card -->
-                <div class="col-lg-3 col-md-6">
-                    <div class="dashboard-card p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="card-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h3 class="fs-2 mb-0">1,254</h3>
-                        </div>
-                        <h5 class="mb-1">Total Users</h5>
-                        <p class="text-muted mb-0">
-                            <i class="fas fa-arrow-up me-1 text-success"></i>
-                            <span>12% increase</span>
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Revenue Card -->
-                <div class="col-lg-3 col-md-6">
-                    <div class="dashboard-card p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="card-icon">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
-                            <h3 class="fs-2 mb-0">$24,500</h3>
-                        </div>
-                        <h5 class="mb-1">Revenue</h5>
-                        <p class="text-muted mb-0">
-                            <i class="fas fa-arrow-up me-1 text-success"></i>
-                            <span>8.3% increase</span>
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Orders Card -->
-                <div class="col-lg-3 col-md-6">
-                    <div class="dashboard-card p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="card-icon">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <h3 class="fs-2 mb-0">352</h3>
-                        </div>
-                        <h5 class="mb-1">Orders</h5>
-                        <p class="text-muted mb-0">
-                            <i class="fas fa-arrow-down me-1 text-danger"></i>
-                            <span>3.2% decrease</span>
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Visitors Card -->
-                <div class="col-lg-3 col-md-6">
-                    <div class="dashboard-card p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="card-icon">
-                                <i class="fas fa-eye"></i>
-                            </div>
-                            <h3 class="fs-2 mb-0">8,945</h3>
-                        </div>
-                        <h5 class="mb-1">Visitors</h5>
-                        <p class="text-muted mb-0">
-                            <i class="fas fa-arrow-up me-1 text-success"></i>
-                            <span>15.7% increase</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+            </div> {% endcomment %}
+            {% block content %}{% endblock %}
         </div>
     </main>
 
     <!-- Bootstrap & jQuery JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    {% comment %} Toastr {% endcomment %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="{% static 'home/js/dashboard.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            // Toastr
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "timeOut": "4000",
+                "extendedTimeOut": "1000",
+                "showDuration": "300",
+                "hideDuration": "300",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+
+        });
+
+    </script>
+    <script>
+        jQuery(document).ready(function($) {
+            {% if messages %}
+                {% for message in messages %}
+                    toastr["{{ message.tags|default:"info" }}"]("{{ message|escapejs }}");
+                {% endfor %}
+            {% endif %}
+        });
+    </script>
+
 </body>
 </html>

@@ -1,0 +1,116 @@
+{% extends "dashboard/admin_dashboard.html" %}
+{% load static %}
+{% block title %}
+Category
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Category</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                    <i class="fas fa-exclamation-triangle me-2 text-danger"></i>
+                                    <div>
+                                        {% for error in form.non_field_errors %}
+                                            <div>{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <form class="row" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                    {% if field.name == "content" %}
+    
+                                        <div class="form-group col-md-10">
+                                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                            {{ field }}
+                                            <div class="text-danger">
+                                                {{ field.errors.0 }}
+                                            </div>
+                                        </div>
+                                    {% else %}
+
+                                        <div class="form-group col-md-5">
+                                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                            {{ field }}
+                                            <div class="text-danger">
+                                                {{ field.errors.0 }}
+                                            </div>
+                                        </div>                                    
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="form-group col-md-12">
+                                    <button type="submit" class="btn  btn-lg" style="background-color: var(--primary-color);">{{button}}    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ {% comment %} Category List Section {% endcomment %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">List
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div
+                                class="table-responsive"
+                            >
+                                {% if data %}
+                                    <table
+                                        class="table"
+                                    >
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Sno</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Sub-categories</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for data in data %}
+                                                <tr>
+                                                    <th scope="row">{{ forloop.counter }}</th>
+                                                    <td>{{ data.name }}</td>
+                                                    <td>({{ data.sub_count }})</td>
+                                                    <td>
+                                                        <a href="{% url "category_delete" data.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                        <div class="alert alert-info text-center" role="alert">
+                                            <h2>No Category Found</h2>
+                                        </div>
+                                {% endif %}
+                                    
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
