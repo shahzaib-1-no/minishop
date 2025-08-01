@@ -73,20 +73,20 @@
                     </div>
                     <div>
                         <small class="text-uppercase text-muted mb-1">Total Orders</small>
-                        <h3 class="fs-4 mb-0">{{ order.total_orders | default:"0" |intcomma }}</h3>
+                        <h3 class="fs-4 mb-0">{{ data.order.total_orders | default:"0" |intcomma }}</h3>
                     </div>
                 </div>
                 <small class="text-muted mb-1">Today's Orders</small>
                 <p class="text-muted mb-0">
-                {% if order.percentage_order > 0 %}
+                {% if data.order.percentage_orders > 0 %}
                     <span class="badge bg-success bg-opacity-10 text-success fw-medium">
                         <i class="fas fa-arrow-up me-1"></i>
-                        {{ order.percentage_order|default:"0" }}% increase since yesterday
+                        {{ data.order.percentage_orders|default:"0" }}% increase since yesterday
                     </span>
-                {% elif order.percentage_order < 0 %}
+                {% elif data.order.percentage_orders < 0 %}
                     <span class="badge bg-danger bg-opacity-10 text-danger fw-medium">
                         <i class="fas fa-arrow-down me-1"></i>
-                        {{ order.percentage_order|default:"0" }}% decrease since yesterday
+                        {{ data.order.percentage_orders|default:"0" }}% decrease since yesterday
                     </span>
                 {% else %}
                     <span class="badge bg-secondary bg-opacity-10 text-muted fw-medium">
@@ -110,20 +110,20 @@
                     </div>
                     <div>
                         <small class="text-uppercase text-muted mb-1">Total Revenue</small>
-                        <h3 class="fs-4 mb-0">{{ revenue.total_revenue | default:"0" |intcomma }}</h3>
+                        <h3 class="fs-4 mb-0">{{ data.revenue.total_revenue | default:"0" |intcomma }}</h3>
                     </div>
                 </div>
                 <small class="text-muted mb-1">Today's Revenue</small>
                 <p class="text-muted mb-0">
-                {% if revenue.percentage_revenue > 0 %}
+                {% if data.revenue.percentage_revenue > 0 %}
                     <span class="badge bg-success bg-opacity-10 text-success fw-medium">
                         <i class="fas fa-arrow-up me-1"></i>
-                        {{ revenue.percentage_revenue|default:"0" }}% increase since yesterday
+                        {{ data.revenue.percentage_revenue|default:"0" }}% increase since yesterday
                     </span>
-                {% elif revenue.percentage_revenue < 0 %}
+                {% elif data.revenue.percentage_revenue < 0 %}
                     <span class="badge bg-danger bg-opacity-10 text-danger fw-medium">
                         <i class="fas fa-arrow-down me-1"></i>
-                        {{ revenue.percentage_revenue|default:"0" }}% decrease since yesterday
+                        {{ data.revenue.percentage_revenue|default:"0" }}% decrease since yesterday
                     </span>
                 {% else %}
                     <span class="badge bg-secondary bg-opacity-10 text-muted fw-medium">
@@ -148,20 +148,20 @@
                     </div>
                     <div>
                         <small class="text-uppercase text-muted mb-1">Total Customers</small>
-                        <h3 class="fs-4 mb-0">{{ customers.total_customers | default:"0" |intcomma }}</h3>
+                        <h3 class="fs-4 mb-0">{{ data.customers.total_customers | default:"0" |intcomma }}</h3>
                     </div>
                 </div>
                 <small class="text-muted mb-1">Today's Customers</small>
                 <p class="text-muted mb-0">
-                {% if customers.percentage_customers > 0 %}
+                {% if data.customers.percentage_customers > 0 %}
                     <span class="badge bg-success bg-opacity-10 text-success fw-medium">
                         <i class="fas fa-arrow-up me-1"></i>
-                        {{ customers.percentage_customers|default:"0" }}% increase since yesterday
+                        {{ data.customers.percentage_customers|default:"0" }}% increase since yesterday
                     </span>
-                {% elif customers.percentage_customers < 0 %}
+                {% elif data.customers.percentage_customers < 0 %}
                     <span class="badge bg-danger bg-opacity-10 text-danger fw-medium">
                         <i class="fas fa-arrow-down me-1"></i>
-                        {{ customers.percentage_customers|default:"0" }}% decrease since yesterday
+                        {{ data.customers.percentage_customers|default:"0" }}% decrease since yesterday
                     </span>
                 {% else %}
                     <span class="badge bg-secondary bg-opacity-10 text-muted fw-medium">
@@ -182,20 +182,20 @@
                     </div>
                     <div>
                         <small class="mb-1 text-uppercase  ">Total Refunds</small>
-                        <h3 class="fs-4 mb-0">{{ refunds.total_refunds | default:"0" |intcomma }}</h3>
+                        <h3 class="fs-4 mb-0">{{ data.refunds.total_refunds | default:"0" |intcomma }}</h3>
                     </div>
                 </div>
                 <small class="mb-1">Today's Refunds</small>
                 <p class="text-muted mb-0">
-                {% if refunds.percentage_refunds > 0 %}
+                {% if data.refunds.percentage_refunds > 0 %}
                     <span class="mb-1 badge bg-success bg-opacity-10 text-success fw-medium">
                         <i class="fas fa-arrow-up me-1"></i>
-                        {{ refunds.percentage_refunds|default:"0" }}% increase since yesterday
+                        {{ data.refunds.percentage_refunds|default:"0" }}% increase since yesterday
                     </span>
-                {% elif refunds.percentage_refunds < 0 %}
+                {% elif data.refunds.percentage_refunds < 0 %}
                     <span class="mb-1 badge bg-danger bg-opacity-10 text-danger fw-medium">
                         <i class="fas fa-arrow-down me-1"></i>
-                        {{ refunds.percentage_refunds|default:"0" }}% decrease since yesterday
+                        {{ data.refunds.percentage_refunds|default:"0" }}% decrease since yesterday
                     </span>
                 {% else %}
                     <span class="mb-1 badge bg-secondary bg-opacity-10 text-muted fw-medium">
@@ -319,13 +319,13 @@
     .then(data => {
         const ctx = document.getElementById('WeeklySalesChart').getContext('2d');
         new Chart(ctx, {
-            type: 'bar',
+            type: 'line', // bar, line, radar, pie, polarArea
             data: data.weekly_chart,
             options: {
                 responsive: true,
                 animation: {
                     duration: 4000, // animation ki total time in ms (1000 = 1 sec)
-                    easing: 'easeOutBounce', // animation style (you can try others too)
+                    easing: 'easeInOutCubic', // animation style (you can try others too)
                 },
                 scales: {
                     y: {
