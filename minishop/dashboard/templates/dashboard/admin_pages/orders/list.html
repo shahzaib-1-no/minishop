@@ -1,0 +1,205 @@
+{% extends "dashboard/admin_dashboard.html" %}
+{% block style %}
+<style>
+  /* --- STATUS CHIPS (User-approved colors) --- */
+  .status {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .status.completed { background: #d1f2e7; color: #0f5132; }
+  .status.pending   { background: #fff3cd; color: #856404; }
+  .status.cancelled { background: #f8d7da; color: #842029; }
+  .status.processing{ background: #e0ecff; color: #0d6efd; } /* optional */
+  .status.shipped   { background: #e8ddff; color: #6f42c1; } /* optional */
+  .status.refunded  { background: #d7f7ff; color: #0aa2c0; } /* optional */
+  /* --- Button Color Overrides --- */
+    .btn-view {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+    .btn-view:hover {
+        background: #bbdefb;
+        transform: translateY(-2px);
+    }
+  /* --- CUSTOMER CELL --- */
+  .customer {
+    font-weight: 600;
+    color: #212529;
+  }
+  .customer small {
+    display: block;
+    color: #6c757d;
+    font-size: 0.8rem;
+  }
+
+  /* --- ORDER TOTAL (clean financial look) --- */
+  .order-amt {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    min-width: 90px;
+    display: inline-block;
+  }
+  .order-amt .curr {
+    opacity: .75;
+    font-weight: 500;
+    margin-right: 2px;
+  }
+
+  /* --- TABLE LAYOUT IMPROVEMENTS --- */
+  .orders-table thead th {
+    background: #212529;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    border-bottom: none;
+  }
+  .orders-table tbody tr {
+    transition: background-color 0.15s ease;
+  }
+  .orders-table tbody tr:hover {
+    background-color: #f1f3f5;
+  }
+  .orders-table td, .orders-table th {
+    padding: 0.7rem 0.9rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #dee2e6;
+  }
+  .orders-table td.text-end { text-align: right !important; }
+  .orders-table td.text-center { text-align: center !important; }
+
+  /* Small screen stacking hint (optional) */
+  @media (max-width: 575.98px) {
+    .orders-table thead {display:none;}
+    .orders-table tbody tr {display:block; margin-bottom:1rem; border:1px solid #dee2e6; border-radius:.25rem; overflow:hidden;}
+    .orders-table tbody td {display:flex; justify-content:space-between; align-items:center; width:100%; border-bottom:1px solid #eee;}
+    .orders-table tbody td::before {
+      content: attr(data-label);
+      font-weight:600;
+      color:#6c757d;
+      font-size:.8rem;
+    }
+    .orders-table tbody td:last-child{border-bottom:none;}
+    .order-amt{text-align:left;}
+  }
+</style>
+{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title mb-0">Orders List</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="orderTable" class="table orders-table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Sno#</th>
+                  <th scope="col">Order#</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Payment</th>
+                  <th scope="col" class="text-end">Total</th>
+                  <th scope="col">Date</th>
+                  <th scope="col" class="text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% comment %} {% for order in data %}
+                  <tr>
+                    <td data-label="S#">{{ forloop.counter }}</td>
+                    <td data-label="Order #">{{ order.order_number }}</td>
+                    <td data-label="Customer" class="customer">
+                      {{ order.address.first_name }}
+                      <small>{{ order.address.email }}</small>
+                    </td>
+                    <td data-label="Status">
+                      {# Map backend status to styled chip #}
+                      {% with st=order.status|lower %}
+                        {% if st == 'completed' or st == 'complete' %}
+                          <span class="status completed">Completed</span>
+                        {% elif st == 'pending' %}
+                          <span class="status pending">Pending</span>
+                        {% elif st == 'cancelled' or st == 'canceled' %}
+                          <span class="status cancelled">Cancelled</span>
+                        {% elif st == 'processing' %}
+                          <span class="status processing">Processing</span>
+                        {% elif st == 'shipped' %}
+                          <span class="status shipped">Shipped</span>
+                        {% elif st == 'refunded' %}
+                          <span class="status refunded">Refunded</span>
+                        {% else %}
+                          <span class="status">{{ order.status }}</span>
+                        {% endif %}
+                      {% endwith %}
+                    </td>
+                    <td data-label="Payment">{{ order.address.method }}</td>
+                    <td data-label="Total" class="text-end">
+                      <span class="order-amt">
+                        <span class="curr ">$</span>
+                        <span class="">{{ order.total_price|floatformat:2 }}</span>
+                      </span>
+                    </td>
+                    <td data-label="Date">{{ order.created_at|date:"d M Y" }}</td>
+                    <td data-label="Action" class="text-end">
+                      <a href="{% url 'order_details' order.order_uuid %}" class="btn btn-sm btn-view" title="View Order"><i class="fas fa-eye"></i></a>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="8" class="text-center text-muted py-4">No orders found.</td>
+                  </tr>
+                {% endfor %} {% endcomment %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+$('#orderTable').DataTable({
+    responsive: false, // stacking hum khud handle karenge
+    autoWidth: false,
+    processing: true,
+    serverSide: true,
+    ajax: '{% url "orders_list_data" %}',
+    order: [[ 0, "desc" ]],
+    columns: [
+        { data: 'Sno', title: 'Sno#', className: "text-center", orderable: false, searchable: false },
+        { data: 'order', title: 'Order#', className: "text-center" },
+        { data: 'customer', title: 'Customer', className: "text-center" },
+        { data: 'status', title: 'Status', className: "text-center" },
+        { data: 'payment', title: 'Payment', className: "text-center" },
+        { data: 'total', title: 'Total', className: "text-center" },
+        { data: 'date', title: 'Date', className: "text-center" },
+        { data: 'action', title: 'Action', orderable: false, searchable: false, className: "text-center"  },
+    ],
+    createdRow: function (row) {
+        $('td', row).each(function (index) {
+            var colTitle = $('#orderTable').DataTable().column(index).header().textContent;
+            $(this).attr('data-label', colTitle);
+        });
+    }
+});
+
+</script>
+{% endblock %}

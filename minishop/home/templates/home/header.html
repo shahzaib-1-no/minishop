@@ -89,7 +89,7 @@
         </li>
         <li class="nav-item cta cta-colored">
           <a href="{% url 'cart' %}" class="nav-link"
-            ><span class="icon-shopping_cart"></span>[0]</a
+            ><span class="icon-shopping_cart"></span>[{{ cart_count }}] </a
           >
         </li>
         {% if user.is_authenticated %}

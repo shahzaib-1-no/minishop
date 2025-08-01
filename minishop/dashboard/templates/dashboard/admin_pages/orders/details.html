@@ -1,0 +1,294 @@
+
+{% extends "dashboard/admin_dashboard.html" %}
+{% block title %}
+Order Details
+{% endblock %}
+
+{% block content %}
+    <div class="container my-4">
+        <!-- Order Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h2 class="card-title mb-1">Order #{{ data.order_number }}</h2>
+                                <p class="text-muted mb-0">
+                                    <i class="bi bi-calendar3 me-1"></i>
+                                    Placed on {{ data.created_at|date:"d M Y" }} at {{ data.created_at|date:"H:i:A" }}
+                                </p>
+                            </div>
+                            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                                {% if data.status == 'COMPLETED' %}
+                                    <span class="badge bg-success fs-6 px-3 py-2 me-2">
+                                        <i class="bi bi-check-circle me-1"></i>Delivered
+                                    </span>
+                                {% elif data.status == 'SHIPPED' %}
+                                    <span class="badge bg-success fs-6 px-3 py-2 me-2">
+                                        <i class="bi bi-check-circle me-1"></i>Shipped
+                                    </span>
+                                {% elif data.status == 'RETURNED' %}
+                                    <span class="badge bg-danger fs-6 px-3 py-2 me-2">
+                                        <i class="bi bi-x-circle me-1"></i>Returned
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-warning fs-6 px-3 py-2 me-2">
+                                        <i class="bi bi-exclamation-triangle me-1"></i>Pending
+                                    </span>
+                                {% endif %}
+                                {% comment %} <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-outline-primary">
+                                        <i class="bi bi-printer me-1"></i>Print
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary">
+                                        <i class="bi bi-download me-1"></i>Export
+                                    </button>
+                                </div> {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Order Items -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">
+                            <i class="bi bi-bag me-2"></i>Order Items ({{ total_items }} items)
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        {% for items in data.items.all %}
+                            <!-- Item {{ forloop.counter }} -->
+                            <div class="row align-items-center p-4 border-bottom">
+                                <div class="col-md-2">
+                                    <div class="bg-light rounded p-3 text-center">
+                                        <img
+                                            src="{{items.product.image.url}}"
+                                            class="img-fluid rounded-top"
+                                            alt="{{items.product.name}}"
+                                        />
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <h6 class="mb-1">{{ items.product.name }}</h6>
+                                    {% comment %} <p class="text-muted mb-1">Space Gray, 512GB SSD, 18GB RAM</p>
+                                    <small class="text-muted">SKU: MBP-14-M3-512</small> {% endcomment %}
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <span class="fw-semibold">Qty: {{ items.quantity }}</span>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <div class="fw-bold">${{ items.total }}</div>
+                                    <small class="text-muted">${{items.price }} each</small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Order Timeline -->
+                {% comment %} <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">
+                            <i class="bi bi-clock-history me-2"></i>Order Timeline
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            <div class="d-flex align-items-start mb-4">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-success rounded-circle p-2">
+                                        <i class="bi bi-check-lg text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">Order Delivered</h6>
+                                    <p class="text-muted mb-1">Package delivered to customer</p>
+                                    <small class="text-muted">Jan 18, 2024 at 3:45 PM</small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-start mb-4">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-info rounded-circle p-2">
+                                        <i class="bi bi-truck text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">Out for Delivery</h6>
+                                    <p class="text-muted mb-1">Package is out for delivery</p>
+                                    <small class="text-muted">Jan 18, 2024 at 9:00 AM</small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-start mb-4">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-warning rounded-circle p-2">
+                                        <i class="bi bi-box-seam text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">Order Shipped</h6>
+                                    <p class="text-muted mb-1">Package shipped from warehouse</p>
+                                    <small class="text-muted">Jan 16, 2024 at 11:30 AM</small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-primary rounded-circle p-2">
+                                        <i class="bi bi-cart-plus text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">Order Placed</h6>
+                                    <p class="text-muted mb-1">Order confirmed and payment processed</p>
+                                    <small class="text-muted">Jan 15, 2024 at 2:30 PM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Order Summary -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">
+                            <i class="bi bi-receipt me-2"></i>Order Summary
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal ({{ total_items }} items)</span>
+                            <span>${{ data.total_price }}</span>
+                        </div>
+                        {% comment %} <div class="d-flex justify-content-between mb-2">
+                            <span>Shipping & Handling</span>
+                            <span>$15.99</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Tax</span>
+                            <span>$172.48</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-success">Discount (SAVE10)</span>
+                            <span class="text-success">-$215.60</span>
+                        </div> {% endcomment %}
+                        <hr>
+                        <div class="d-flex justify-content-between fw-bold fs-5">
+                            <span>Total</span>
+                            <span>${{ data.total_price }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Information -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">
+                            <i class="bi bi-person me-2"></i>Customer Information
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <strong>{{ data.address.first_name }} {{ data.address.last_name }}</strong><br>
+                            {% comment %} <br> {% endcomment %}
+                            {% comment %} <small class="text-muted">{{ data.address.email }}</small> {% endcomment %}
+                        </div>
+                        <div class="mb-3">
+                            <i class="bi bi-envelope me-2 text-muted"></i>
+                            <a href="#" class="text-decoration-none">{{ data.address.email }}</a>
+                        </div>
+                        <div class="mb-0">
+                            <i class="bi bi-telephone me-2 text-muted"></i>
+                            <span>{{ data.address.phone }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">
+                            <i class="bi bi-geo-alt me-2"></i>Shipping Address
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <address class="mb-0">
+                            <span>Country : </span><strong>{{data.address.country}}</strong><br>
+                            <span>City : </span><strong>{{data.address.city}}</strong><br>
+                            <span>Postal Code : </span><strong>{{data.address.postal_code}}</strong><br>
+                            <span>Apartment : </span><strong>{{data.address.apartment}}</strong><br>
+                            <span>Address : </span><strong>{{data.address.address}}</strong><br>
+                        </address>
+                    </div>
+                </div>
+
+                <!-- Payment Information -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">
+                            <i class="bi bi-credit-card me-2"></i>Payment Information
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-credit-card-2-front me-2 fs-5 text-primary"></i>
+                            <div>
+                                <div class="fw-semibold">Method</div>
+                                <small class="text-muted">{{ data.address.method }}</small>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            {% if data.payment.is_paid %}
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle me-1"></i>Payment Confirmed
+                                </span>
+                            {% else %}
+                                <span class="badge bg-danger">
+                                    <i class="bi bi-x-circle me-1"></i>Payment Pending
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                {% comment %} <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">
+                            <i class="bi bi-lightning me-2"></i>Quick Actions
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-outline-primary">
+                                <i class="bi bi-envelope me-2"></i>Send Email
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-counterclockwise me-2"></i>Process Refund
+                            </button>
+                            <button type="button" class="btn btn-outline-warning">
+                                <i class="bi bi-exclamation-triangle me-2"></i>Report Issue
+                            </button>
+                            <button type="button" class="btn btn-outline-info">
+                                <i class="bi bi-plus-circle me-2"></i>Add Note
+                            </button>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

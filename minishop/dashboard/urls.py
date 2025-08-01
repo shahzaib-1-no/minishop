@@ -7,9 +7,18 @@ urlpatterns = [
     path('user/', views.user_dashboard, name='user_dashboard'),
     path('logout/', views.logout, name='logout'),
     
+    ### Notification Section ###
+    path('notification/<int:pk>/view/', views.notification_redirect_view, name='notification_redirect_view'),
+    ### Notification Section End ###
+    
     ### Navbar Section ###
     path('navbar/create/', views.navbar_create, name='navbar_create'),
     ### Navbar Section End ###
+    
+    ### Dashboard Section ###
+    path('dashboard/order/chart/data/', views.order_chart_data, name='order_chart_data'),
+    path('dashboard/order/weekly/chart/data/', views.weekly_chart_data, name='weekly_chart_data'),
+    ### Dashboard Section End ###
     
     ### Banner Section ###
     path('banner/create/', views.banner_create, name='banner_create'),
@@ -32,8 +41,15 @@ urlpatterns = [
     
     ### Product Section ###
     path('product/create/', views.product_create, name='product_create'),
-    path('product/list/', views.product_list, name='product_list'),
+    path('product/list/', views.product_list_page, name='product_list'),
+    path('product/data/', views.ProductList.as_view(), name='product_list_data'),   # JSON Data
     path('product/<int:pk>/update/', views.product_update, name='product_update'),
     path('product/<int:pk>/delete/', views.product_delete, name='product_delete'),
     ### Product Section End ###
+    
+    ### Orders Section ###
+    path('orders/list/', views.orders_list, name='orders_list'),
+    path('orders/data/', views.OrdersListData.as_view(), name='orders_list_data'),   # JSON Data
+    path('orders/<uuid:pk>/details/', views.order_details, name='order_details'),
+    ### Orders Section End ###
 ]

@@ -1,6 +1,11 @@
 from django.db import models
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
 # Create your models here.
 class navbar(models.Model):
     name = models.CharField(max_length=100)
@@ -118,4 +123,50 @@ class Product(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-    
+
+class Notification(models.Model):
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['user', 'is_read']),
+            models.Index(fields=['notification_type']),
+            models.Index(fields=['created_at']),
+        ]
+    NOTIFICATION_CHOICES = [
+        # User-related
+        ('user_registered', 'New User Registered'),
+        ('user_profile_updated', 'User Profile Updated'),
+
+        # Order-related
+        ('order_placed', 'Order Placed'),
+        ('order_shipped', 'Order Shipped'),
+        ('order_delivered', 'Order Delivered'),
+        ('order_cancelled', 'Order Cancelled'),
+        ('order_returned', 'Order Returned'),
+
+        # Messaging
+        ('support_reply', 'Support Team Replied'),
+        ('user_message', 'New User Message'),
+
+        # System
+        ('system_alert', 'System Alert'),
+        ('maintenance_notice', 'Scheduled Maintenance'),
+
+        # Marketing/Custom
+        ('promo_offer', 'New Promotional Offer'),
+        ('custom', 'Custom Notification'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    message = models.TextField()
+    notification_type = models.CharField(max_length=55, choices=NOTIFICATION_CHOICES)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+     # Generic relation
+    content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True, blank=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
+    related_object = GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return f"{self.notification_type} → {self.message[:50]}"
+
