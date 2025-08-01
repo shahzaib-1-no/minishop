@@ -34,8 +34,8 @@
                   <a href="{% url 'product_detail' product.slug %}" class="img-prod"
                     ><img
                       class="img-fluid"
-                      src="{% static 'home/images/product-1.png' %}"
-                      alt="Colorlib Template"
+                      src="{{product.image.url}}"
+                      alt="{{product.name}}"
                     />
                     <div class="overlay"></div>
                   </a>
@@ -80,13 +80,31 @@
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
+                  <!-- Previous Button -->
+                  {% if products.has_previous %}
+                      <li><a href="?page={{ products.previous_page_number }}">&lt;</a></li>
+                  {% else %}
+                      <li class="disabled"><span>&lt;</span></li>
+                  {% endif %}
+
+
+                  <!-- Show Only 5 Pages -->
+                  {% for num in products.paginator.page_range %}
+                      {% if num >= products.number|add:'-2' and num <= products.number|add:'2' %}
+                          {% if products.number == num %}
+                              <li class="active"><span>{{ num }}</span></li>
+                          {% else %}
+                              <li><a href="?page={{ num }}">{{ num }}</a></li>
+                          {% endif %}
+                      {% endif %}
+                  {% endfor %}
+
+                  <!-- Next Button -->
+                  {% if products.has_next %}
+                      <li><a href="?page={{ products.next_page_number }}">&gt;</a></li>
+                  {% else %}
+                      <li class="disabled"><span>&gt;</span></li>
+                  {% endif %}
               </ul>
             </div>
           </div>
@@ -128,7 +146,7 @@
                       <div class="panel-body">
                         <ul>
                           {% for sub_cat in cat.sub_categories %}
-                            <li><a href="#">{{sub_cat.name}}</a></li>
+                            <li><a  href="{% url 'category_products' sub_cat.slug %}">{{sub_cat.name}}</a></li>
                           {% endfor %}
                         </ul>
                       </div>

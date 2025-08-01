@@ -3,6 +3,68 @@
 {% block title %}
 Product List
 {% endblock %}
+{% block style %}
+<style>
+@media (max-width: 575.98px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100% !important;
+  }
+
+  .table tr {
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .table td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 6px;
+    text-align: left; /* Label left align */
+  }
+
+  .table td:last-child {
+    border-bottom: none;
+  }
+
+  /* Image center align */
+  .table td img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Action buttons center align */
+  .table td .btn {
+    padding: 5px 8px;
+    font-size: 0.85rem;
+    margin: 2px;
+  }
+  .table td[data-label="Action"] {
+    text-align: center; /* buttons center */
+  }
+}
+</style>
+{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -21,9 +83,8 @@ Product List
                             <div
                                 class="table-responsive"
                             >
-                            {% if data %}
                                 <table
-                                    class="table"
+                                    class="table" id="myTable"
                                 >
                                     <thead>
                                         <tr>
@@ -39,35 +100,8 @@ Product List
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for data in data %}
-                                            <tr>
-                                                <th scope="row">{{ forloop.counter }}</th>
-                                                <td>
-                                                    {% if data.image %}
-                                                        <img src="{{ data.image.url }}" class="img-thumbnail" width="150" alt="Current Image">
-                                                    {% else %}
-                                                        <p>No image available</p>
-                                                    {% endif %}
-                                                </td>
-                                                <td>{{ data.name }}</td>
-                                                <td>{{ data.price }}</td>
-                                                <td>{{ data.quantity }}</td>
-                                                <td>{{ data.category }}</td>
-                                                <td>{{ data.created_at| date:"Y-m-d" }}</td>
-                                                <td>{{ data.updated_at| date:"Y-m-d" }}</td>
-                                                <td>
-                                                    <a href="{% url "product_update" data.id %}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                                                    <a href="{% url "product_delete" data.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
                                     </tbody>
                                 </table>
-                            {% else %}
-                                <div class="alert alert-info text-center" role="alert">
-                                    <strong>No Data Found</strong>
-                                </div>
-                            {% endif %}
                                 
                             </div>
                             
@@ -78,4 +112,34 @@ Product List
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+$('#myTable').DataTable({
+    responsive: false, // stacking hum khud handle karenge
+    autoWidth: false,
+    processing: true,
+    serverSide: true,
+    ajax: '{% url "product_list_data" %}',
+    order: [[ 0, "desc" ]],
+    columns: [
+        { data: 'Sno', title: 'Sno', orderable: false, searchable: false, className: "text-center" },
+        { data: 'image', title: 'Image', orderable: false, searchable: false, className: "text-center" },
+        { data: 'name', title: 'Title', className: "text-center"},
+        { data: 'price', title: 'Price', className: "text-center" },
+        { data: 'quantity', title: 'Quantity', className: "text-center" },
+        { data: 'category', title: 'Category', className: "text-center" },
+        { data: 'created_at', title: 'Created_at' },
+        { data: 'updated_at', title: 'Updated_at', orderable: false, searchable: false, className: "text-center" },
+        { data: 'action', title: 'Action', orderable: false, searchable: false, className: "text-center"},
+    ],
+    createdRow: function (row) {
+        $('td', row).each(function (index) {
+            var colTitle = $('#myTable').DataTable().column(index).header().textContent;
+            $(this).attr('data-label', colTitle);
+        });
+    }
+});
+
+</script>
 {% endblock %}
