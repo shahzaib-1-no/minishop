@@ -1,5 +1,4 @@
 from django import template
-from django.contrib.auth.models import User
 from dashboard.models import Notification
 
 register = template.Library()

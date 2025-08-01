@@ -120,6 +120,10 @@ class ReturnRequest(models.Model):
 
     def __str__(self):
         return f"Return for {self.order_item} - {self.status}"
+    
+    def get_absolute_url(self):
+        return reverse('order_details', kwargs={'pk': self.order_item.order.order_uuid})
+    
 
 # ------------------ Refund Model ------------------
 class Refund(models.Model):

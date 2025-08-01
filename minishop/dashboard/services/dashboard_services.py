@@ -199,7 +199,6 @@ class DashboardChartsServices:
         for entry in daily_sales:
             day_label = entry['day'].strftime('%a')
             all_days[day_label] = float(entry['total'])
-        print(f"all_days: {all_days}")
         # Final Chart.js format
         chart_data = {
             "labels": list(all_days.keys()),

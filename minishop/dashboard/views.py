@@ -36,6 +36,7 @@ def vendor_dashboard(request):
 @login_required
 @user_passes_test(is_admin)
 def admin_dashboard(request):
+    
     dashboard_services= DashboardServices()
     data= dashboard_services.get_cards()   
     context={
@@ -78,10 +79,14 @@ def navbar_create(request):
 @login_required
 @user_passes_test(is_admin)
 def notification_redirect_view(request, pk):
-    notification = get_object_or_404(Notification, pk=pk)
-    notification.is_read = True
-    notification.save()
-    return redirect(notification.related_object.get_absolute_url())
+    try:
+        notification = get_object_or_404(Notification, pk=pk)
+        notification.is_read = True
+        notification.save()
+        return redirect(notification.related_object.get_absolute_url())
+    except Exception as e:
+        messages.error(request, f"Error: {e}")
+        return redirect('admin_dashboard')
 ### Notification Section End ###
 
 ### Dashboard Section ###
