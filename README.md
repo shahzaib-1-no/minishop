@@ -65,3 +65,13 @@ You can auto-generate sample products and orders for testing.
 - Generate 6 Orders:
   ```bash
   python manage.py seed_orders
+## 🧾 Frontend Template Attribution
+The frontend design of this project is based on the free template  
+**"MiniShop – Bootstrap 4 eCommerce Template"** by **Colorlib / ThemeWagon**.  
+🔗 [View Template](https://themewagon.com/themes/free-bootstrap-4-html5-responsive-ecommerce-website-template-minishop/)
+
+🛠️ **License**: Open Source | Free for Commercial Use | Lifetime Free Updates  
+📌 **Attribution**: Footer attribution may be required depending on author terms.
+
+We are using this template in accordance with ThemeWagon’s free template license policy.  
+Redistribution of the template alone is not permitted.
