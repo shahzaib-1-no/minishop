@@ -91,6 +91,7 @@ def get_user_cart(request):
         cart = request.session.get('cart', {})
         items = list(cart.values())
         total = sum(float(item['total']) for item in items)
+        
     return items, total
 
 

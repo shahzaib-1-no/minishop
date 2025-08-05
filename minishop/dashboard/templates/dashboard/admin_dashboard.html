@@ -19,6 +19,7 @@
             </a>
         </li>
     </ul>
+
 <!-- Product Management -->
     <div class="nav-item-header">
         Product Management
@@ -37,6 +38,7 @@
             </a>
         </li>
     </ul>
+    
 <!-- Content Management -->
     <div class="nav-item-header">
         Content Management
@@ -283,6 +285,58 @@
 
                 <!-- Chart Canvas -->
                 <canvas id="WeeklySalesChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+        
+        <!-- Low Stock Products -->
+        <div class="col-lg-6 col-md-6">
+            <div class="dashboard-card p-4 font_color">
+
+                <!-- Heading -->
+                <div class="mb-3 text-center w-100" style="color: #000; font-weight: 600; font-size: 18px;">
+                    Low Stock Products
+                </div>
+
+                {% if data.low_stock_products %}
+                    <div
+                        class="table-responsive"
+                    >
+                        <table
+                            class="table"
+                        >
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sno</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for products in data.low_stock_products %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td><img src="{{ products.image.url }}" class="img-thumbnail" width="50" alt="Current Image"></td>
+                                            <td scope="row">{{ products.name }}</td>
+                                            <td class="text-danger text-center danger">{{ products.quantity }}</td>
+                                            <td>
+                                                <a href="{% url "product_update" products.id %}" class="btn btn-sm btn-view" title="View Product"><i class="fas fa-pen"></i></a>
+                                            </td>
+                                        </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-4 text-muted">
+                        <div class="card-icon">
+                            <i class="fas fa-file-alt fs-3 mb-2"></i>
+                        </div>
+                        <div>No low stock products</div>
+                    </div>                    
+                {% endif %}
             </div>
         </div>
     </div>
