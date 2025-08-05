@@ -48,7 +48,7 @@
                     <td class="image-prod">
                       <div
                         class="img"
-                        style="background-image: url('{% static "home/images/product-3.jpg" %}')"
+                        style="background-image: url('{{items.image}}')"
                       ></div>
                     </td>
 
@@ -82,7 +82,7 @@
               </tbody>
             </table>
           {% else %}
-            <div class="alert alert-info text-center" role="alert">
+            <div class="alert alert-warning text-center" role="alert">
               <strong>No Products Found</strong>  
             </div>
           {% endif %}
@@ -97,14 +97,10 @@
             <span>Subtotal</span>
             <span>$20.60</span>
           </p>
-          <p class="d-flex">
+          {% comment %} <p class="d-flex">
             <span>Delivery</span>
             <span>$0.00</span>
-          </p>
-          <p class="d-flex">
-            <span>Discount</span>
-            <span>$3.00</span>
-          </p>
+          </p> {% endcomment %}
           <hr />
           <p class="d-flex total-price">
             <span>Total</span>

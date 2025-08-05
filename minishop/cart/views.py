@@ -17,8 +17,6 @@ def cart(request):
         'cart_items': cart_items,
         'cart_total': cart_total
     }
-    print (f"Cart: {cart_items}")
-    print (f"Total: {cart_total}")
     return render(request, 'cart/cart.html', context)
         
 

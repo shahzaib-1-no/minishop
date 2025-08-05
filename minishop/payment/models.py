@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.urls import reverse
 # Create your models here.
 
+
 # ------------------ Address Model ------------------
 class Address(models.Model):
     PAYMENT_CHOICES = [

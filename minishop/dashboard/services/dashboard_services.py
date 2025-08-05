@@ -22,12 +22,14 @@ class DashboardServices:
         customers= self._get_customers_card(today, yesterday)
         refunds= self._get_refunds_card(today, yesterday)
         recent_orders= self._get_recent_orders()
+        low_stock_products= self._get_low_stock_products()
         context= {
             'order':order,
             'revenue':revenue,
             'customers':customers,
             'refunds':refunds,
             'recent_orders':recent_orders,
+            'low_stock_products':low_stock_products,
         }
         return context
         
@@ -128,6 +130,14 @@ class DashboardServices:
         """
         orders = Order.objects.order_by('-id')[:5]
         return orders
+    
+    def _get_low_stock_products(self):
+        """
+        Get low stock products
+        """
+        products = Product.objects.filter( quantity__lte = 5).order_by('-id')[:5]
+        return products
+    
     
 class DashboardChartsServices:
     def get_chats(self):
