@@ -8,7 +8,7 @@ A scalable and feature-rich E-Commerce platform built using Django and MySQL. In
 
 | Dashboard Home | Order List | Order Detail | Product List |
 |:--------------:|:----------:|:------------:|:------------:|
-| ![Home](https://github.com/shahzaib-1-no/minishop/blob/010b9b57cb756bbd49d65526f0fc08de831a29c4/dashboard_home.png) | ![Orders](https://github.com/shahzaib-1-no/minishop/blob/6e2deeaa6516eeb1df665a8b8065c57c7f65ed39/order_list_dashboard.png) | ![Detail](https://github.com/shahzaib-1-no/minishop/blob/fa629a889613ef9f0131eaebce6d0250e3e7d4b4/order_detail_dashboard.png) | ![Products](https://github.com/shahzaib-1-no/minishop/blob/fa629a889613ef9f0131eaebce6d0250e3e7d4b4/product_list_dashboard.png) |
+| ![Home](https://github.com/shahzaib-1-no/minishop/blob/8d53d3d9a8e04636c3ac9efc1481eac87f2bfae0/minishop_images/dashboard_home.png) | ![Orders](https://github.com/shahzaib-1-no/minishop/blob/8d53d3d9a8e04636c3ac9efc1481eac87f2bfae0/minishop_images/order_list_dashboard.png) | ![Detail](https://github.com/shahzaib-1-no/minishop/blob/8d53d3d9a8e04636c3ac9efc1481eac87f2bfae0/minishop_images/order_detail_dashboard.png) | ![Products](https://github.com/shahzaib-1-no/minishop/blob/8d53d3d9a8e04636c3ac9efc1481eac87f2bfae0/minishop_images/product_list_dashboard.png) |
 
 ---
 
@@ -16,7 +16,7 @@ A scalable and feature-rich E-Commerce platform built using Django and MySQL. In
 
 | Landign Page | Cart Page | Checkout Page | Shop Detail | Shop Page |
 |:------------:|:---------:|:-------------:|:-----------:|:---------:|
-| ![Landing Page](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/landing_page.png) | ![Cart Page](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/cart_page.png) | ![Checkout Page](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/checkout_page.png) | ![Shop Detail ](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/shop_detail_page.png) | ![Shop Page](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/shop_page.png) |
+| ![Landing Page](https://github.com/shahzaib-1-no/minishop/blob/8d53d3d9a8e04636c3ac9efc1481eac87f2bfae0/minishop_images/landing_page.png) | ![Cart Page](https://github.com/shahzaib-1-no/minishop/blob/8d53d3d9a8e04636c3ac9efc1481eac87f2bfae0/minishop_images/cart_page.png) | ![Checkout Page](https://github.com/shahzaib-1-no/minishop/blob/8d53d3d9a8e04636c3ac9efc1481eac87f2bfae0/minishop_images/checkout_page.png) | ![Shop Detail ](https://github.com/shahzaib-1-no/minishop/blob/8d53d3d9a8e04636c3ac9efc1481eac87f2bfae0/minishop_images/shop_detail_page.png) | ![Shop Page](https://github.com/shahzaib-1-no/minishop/blob/8d53d3d9a8e04636c3ac9efc1481eac87f2bfae0/minishop_images/shop_page.png) |
 
 ---
 ## 🚀 Key Features
