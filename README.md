@@ -4,7 +4,7 @@ A scalable and feature-rich E-Commerce platform built using Django and MySQL. In
 
 ---
 
-## 📸 Dashboard Screenshots
+## 📸 Admin Dashboard Screenshots
 
 | Dashboard Home | Order List | Order Detail | Product List |
 |:--------------:|:----------:|:------------:|:------------:|
@@ -12,6 +12,13 @@ A scalable and feature-rich E-Commerce platform built using Django and MySQL. In
 
 ---
 
+## 📸 LandingPage Screenshots
+
+| Landign Page | Cart Page | Checkout Page | Shop Detail | Shop Page |
+|:------------:|:---------:|:-------------:|:-----------:|:---------:|
+| ![Landing Page](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/landing_page.png) | ![Cart Page](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/cart_page.png) | ![Checkout Page](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/checkout_page.png) | ![Shop Detail ](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/shop_detail_page.png) | ![Shop Page](https://github.com/shahzaib-1-no/minishop/blob/29b9cbaf68acea19bbce96ace7939139307ca87d/shop_page.png) |
+
+---
 ## 🚀 Key Features
 
 - 🔐 User Authentication (Signup, Login, Logout)
