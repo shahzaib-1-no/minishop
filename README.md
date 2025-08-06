@@ -58,15 +58,28 @@ A scalable and feature-rich E-Commerce platform built using Django and MySQL. In
 3. **Install Dependencies**
    ```bash
    pip install -r requirements.txt
-4. **Apply Migrations & Run Server**
+4. **MySQL Configuration**  
+Inside your Django project's settings.py, update the DATABASES section:
+   ```bash
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.mysql',
+           'NAME': 'minishop_db',
+           'USER': 'root',
+           'PASSWORD': 'root',
+           'HOST': '127.0.0.1',
+           'PORT': '3306',
+       }
+   }
+6. **Apply Migrations & Run Server**
    ```bash
    python manage.py makemigrations
    python manage.py migrate
    python manage.py createsuperuser
    python manage.py runserver
-5. **Optional: Seed Fake Data**.
+7. **Optional: Seed Fake Data**  
 You can auto-generate sample products and orders for testing.
--Generate 200 Products:
+- Generate 200 Products:  
    ```bash
    python manage.py seed_products
 - Generate 6 Orders:
